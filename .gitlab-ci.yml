@@ -95,7 +95,7 @@ build_preview:
     - update_preview_baseurl
     - yarn run build:preview
     # remove service_checks json as we don't need to s3 push that..
-    - rm -rf data/service_checks
+    #- rm -rf data/service_checks
     - in-isolation deploy_preview
     # remove static images so we can skip from artifact passed in gitlab
     - remove_static_from_repo
