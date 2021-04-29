@@ -83,6 +83,7 @@ build_preview:
     MESSAGE: ":gift_heart: Your preview site is available!\nNow running tests..."
     CONFIGURATION_FILE: "./local/bin/py/build/configurations/pull_config_preview.yaml"
     LOCAL: "False"
+    UNTRACKED_EXTRAS: "data,content/en/agent/basic_agent_usage/heroku.md,content/en/agent/basic_agent_usage/ansible.md,content/en/agent/basic_agent_usage/chef.md,content/en/agent/basic_agent_usage/puppet.md,content/en/developers/integrations,content/en/agent/basic_agent_usage/saltstack.md,content/en/developers/amazon_cloudformation.md,content/en/integrations,content/en/logs/log_collection/android.md,content/en/logs/log_collection/ios.md,content/en/tracing/setup_overview/setup/android.md,content/en/tracing/setup_overview/setup/ruby.md,content/en/security_platform/default_rules,content/en/serverless/forwarder.md,content/en/serverless/datadog_lambda_library/python.md,content/en/serverless/datadog_lambda_library/nodejs.md,content/en/serverless/datadog_lambda_library/ruby.md,content/en/serverless/datadog_lambda_library/go.md,content/en/serverless/datadog_lambda_library/java.md,content/en/real_user_monitoring/android/_index.md,content/en/real_user_monitoring/android/data_collected.md,content/en/real_user_monitoring/android/advanced_configuration.md,content/en/real_user_monitoring/android/troubleshooting.md,content/en/real_user_monitoring/android/integrated_libraries.md,content/en/real_user_monitoring/error_tracking/android.md,content/en/real_user_monitoring/browser/_index.md,content/en/real_user_monitoring/ios.md,content/en/real_user_monitoring/reactnative.md,content/en/serverless/serverless_integrations/plugin.md,content/en/serverless/serverless_integrations/macro.md,content/en/serverless/serverless_integrations/cli.md,content/en/logs/log_collection/javascript.md"
   script:
     - post_dd_event "documentation deploy ${CI_COMMIT_REF_NAME} started" "${CI_PROJECT_URL}/pipelines/${CI_PIPELINE_ID}" "info"
     - touch Makefile.config
@@ -99,6 +100,7 @@ build_preview:
     # remove static images so we can skip from artifact passed in gitlab
     - remove_static_from_repo
     - notify_slack "<https://github.com/DataDog/documentation/commit/${CI_COMMIT_SHA}|${CI_COMMIT_REF_NAME}> is ready for preview. <${CI_PROJECT_URL}/pipelines/${CI_PIPELINE_ID}| checks running>." "#31b834"
+    - git ls-files --others --exclude-standard -m
     - create_artifact_untracked
   artifacts:
     paths:
